@@ -4,15 +4,27 @@ describe('employees', function() {
       for (const key in employee) {
         delete employee[key];
       }
-
-      employee.name = 'Sam';
+      
+      employee.name = 'Sam'
+      
     });
+    const employee = {}
+    employee.name = 'Sam'
+    function updateEmployeeWithKeyAndValue(obj, key, value){
+      return {
+        ...obj,
+        [key]: value,
+      }
+    }
+    const newEmployee = updateEmployeeWithKeyAndValue(employee, "name", 'Bob')
+    
 
     it('returns an employee with the original key value pairs and the new key value pair', function () {
       expect(updateEmployeeWithKeyAndValue(employee, 'streetAddress', '11 Broadway')).to.eql({
         name: 'Sam',
         streetAddress: '11 Broadway'
       });
+      
     });
 
     it('it does not modify the original employee, but rather returns a clone with the new data', function () {
@@ -34,6 +46,17 @@ describe('employees', function() {
         streetAddress: '12 Broadway'
       });
     });
+    const employee = {}
+    employee.name = 'Sam'
+    employee.streetAddress = '15 Main'
+
+    function destructivelyUpdateEmployeeWithKeyAndValue (obj, key, value){
+      obj [key]= value
+
+      return obj
+    }
+    const newAddress = destructivelyUpdateEmployeeWithKeyAndValue (employee, 'streetAddress', '12 Broadway')
+
   });
 
   describe('deleteFromEmployeeByKey(employee, key)', function () {
@@ -49,6 +72,16 @@ describe('employees', function() {
 
       expect(employee['name']).to.equal('Sam');
     });
+    const employee = {}
+    employee.name = "Sam"
+
+    function deleteFromEmployeeByKey(employee, key) {
+      
+      const NEW_OBJ =  Object.assign({}, employee);
+      delete NEW_OBJ[key];
+      return NEW_OBJ;
+    }
+   
   });
 
   describe('destructivelyDeleteFromEmployeeByKey(employee, key)', function () {
@@ -64,5 +97,15 @@ describe('employees', function() {
       expect(employee['name']).to.equal(undefined);
       expect(employee).to.equal(newEmployee);
     });
+    const employee = {}
+    employee.name = "Sam"
+
+    function destructivelyDeleteFromEmployeeByKey(employee, key) {
+    
+      Object.assign({}, employee);
+      delete employee[key];
+      return employee;
+      }
+   
   });
 });
